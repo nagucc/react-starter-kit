@@ -1,18 +1,25 @@
 /**
  * React Starter Kit (https://www.reactstarterkit.com/)
  *
- * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
+ * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, { PropTypes } from 'react';
+import React, { Children, PropTypes } from 'react';
 
 const ContextType = {
   // Enables critical path CSS rendering
   // https://github.com/kriasoft/isomorphic-style-loader
   insertCss: PropTypes.func.isRequired,
+  // Integrate Redux
+  // http://redux.js.org/docs/basics/UsageWithReact.html
+  store: PropTypes.shape({
+    subscribe: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    getState: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 /**
@@ -28,9 +35,16 @@ const ContextType = {
  *     store: createStore(),
  *   };
  *
- *   ReactDOM.render(<App context={context}><HomePage /></App>, container);
+ *   ReactDOM.render(
+ *     <App context={context}>
+ *       <Layout>
+ *         <LandingPage />
+ *       </Layout>
+ *     </App>,
+ *     container,
+ *   );
  */
-class App extends React.Component {
+class App extends React.PureComponent {
 
   static propTypes = {
     context: PropTypes.shape(ContextType).isRequired,
@@ -46,7 +60,7 @@ class App extends React.Component {
   render() {
     // NOTE: If you need to add or modify header, footer etc. of the app,
     // please do that inside the Layout component.
-    return React.Children.only(this.props.children);
+    return Children.only(this.props.children);
   }
 
 }
