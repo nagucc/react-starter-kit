@@ -7,7 +7,8 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Login.css';
 
@@ -94,7 +95,7 @@ class Login extends React.Component {
                 id="usernameOrEmail"
                 type="text"
                 name="usernameOrEmail"
-                autoFocus
+                autoFocus // eslint-disable-line jsx-a11y/no-autofocus
               />
             </div>
             <div className={s.formGroup}>

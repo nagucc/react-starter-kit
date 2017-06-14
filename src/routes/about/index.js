@@ -10,18 +10,14 @@
 import React from 'react';
 import Layout from '../../components/Layout';
 import Page from '../../components/Page';
+import about from './about.md';
 
-export default {
+function action() {
+  return {
+    chunks: ['about'],
+    title: about.title,
+    component: <Layout><Page {...about} /></Layout>,
+  };
+}
 
-  path: '/about',
-
-  async action() {
-    const data = await require.ensure([], require => require('./about.md'), 'about');
-
-    return {
-      title: data.title,
-      component: <Layout><Page {...data} /></Layout>,
-    };
-  },
-
-};
+export default action;

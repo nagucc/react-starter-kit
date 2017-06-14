@@ -1,10 +1,14 @@
-FROM node:7.2.1-alpine
+FROM node:7.9.0-alpine
 
-# Copy application files
-COPY ./build /usr/src/app
+# Set a working directory
 WORKDIR /usr/src/app
 
+COPY ./build/package.json .
+
 # Install Node.js dependencies
-RUN npm install --production --silent
+RUN yarn install --production --no-progress
+
+# Copy application files
+COPY ./build .
 
 CMD [ "node", "server.js" ]

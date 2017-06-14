@@ -8,7 +8,7 @@
  */
 
 import { GraphQLList as List } from 'graphql';
-import fetch from '../../core/fetch';
+import fetch from 'isomorphic-fetch';
 import NewsItemType from '../types/NewsItemType';
 
 // React.js News Feed (RSS)
@@ -30,15 +30,17 @@ const news = {
       lastFetchTime = new Date();
       lastFetchTask = fetch(url)
         .then(response => response.json())
-        .then(data => {
+        .then((data) => {
           if (data.status === 'ok') {
             items = data.items;
           }
 
+          lastFetchTask = null;
           return items;
         })
-        .finally(() => {
+        .catch((err) => {
           lastFetchTask = null;
+          throw err;
         });
 
       if (items.length) {
